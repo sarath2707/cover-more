@@ -1,0 +1,38 @@
+version: '3'
+services:
+  flask-microservice:
+    build:
+      context: ./flask-microservice
+      dockerfile: Dockerfile
+    ports:
+      - 2727:2727
+    environment:
+      - FLASK_ENV=development
+    volumes:
+      - ./flask-microservice:/app/flask-microservice
+    command: python /app/flask-microservice/app.py
+
+  laravel-microservice:
+    build:
+      context: ./laravel-microservice
+      dockerfile: Dockerfile
+    ports:
+      - 2728:2728
+    environment:
+      - APP_ENV=development
+    volumes:
+      - ./laravel-microservice:/app/laravel-microservice
+    command: php artisan serve --host=0.0.0.0 --port=2728
+
+  react-microservice:
+    build:
+      context: ./react-microservice
+      dockerfile: Dockerfile
+    ports:
+      - 2729:2729
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./react-microservice:/app/react-microservice
+    command: npm start
+
